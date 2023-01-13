@@ -131,3 +131,77 @@ implements = 구현하다.
 1. 하나의 클래스가 여러개의 인터페이스를 구현할 수 있다.
 2. 인터페이스도 상속이 된다.
 3. 인터페이스의 멤버는 반드시 public이어야 한다.
+
+# 다형성
+
+하나의 메소드나 클래스가 있을 때 다양한 방법으로 동작하는 것
+
+### overloading과 다형성
+
+앞서 배웠던 overloading이 다형성의 대표라고 할 수 있다.
+똑같이 생긴 a () 메서드인데, 안의 값이 숫자인지, 문자인지에 따라 다른 메서드가 실행된다.
+
+```java
+public void a(int param){
+  System.out.println("숫자출력");
+  System.out.println(param);
+}
+public void a(String param){
+  System.out.println("문자출력");
+  System.out.println(param);
+}
+```
+
+### 클래스의 다형성
+
+```java
+class A{
+    public String x(){return "x";}
+}
+class B extends A{
+    public String y(){return "y";}
+}
+
+A obj = new B();
+obj.x();
+obj.y();
+
+```
+
+- A를 상속받아 만든 B
+- `A obj = new B();` = obj 인스턴스는 클래스 B로 만들었지만 부모의 클래스 형식으로 사용했다
+- `obj.y();` = A 클래스에는 y 메서드가 없기 때문에 오류가 난다.
+
+조금 더 적용된 코드를 보자
+
+```java
+class A{
+    public String x(){return "A.x";}
+}
+class B extends A{
+    public String x(){return "B.x";}
+    public String y(){return "y";}
+}
+
+A obj = new B();
+System.out.println(obj.x());
+// => B.x
+```
+
+B 클래스로 만들었지만 A 클래스 형태의 obj이다.
+이번에는 클래스 B에서 x 메서드를 오버라이딩 했다.
+이때 실행하게 되면 class A이지만 B 클래스로 덮어 씌워졌기 때문에 B.x가 출력된다.
+
+> 어떤 클래스를 상속해 여러개의 클래스를 만들었을 때, 그 클래스들로 만들어진 인스턴스들의 타입을 다 똑같은 클래스로 사용할 수 있다
+
+
+### 인터페이스와 다형성
+
+```java
+interface I{}
+class C implements I{}
+
+I obj = new C();
+```
+
+특정한 인터페이스로 구현하고 있는 클래스가 있을 때, 이 클래스의 데이터 타입으로 인터페이스를 지정할 수 있다. 
